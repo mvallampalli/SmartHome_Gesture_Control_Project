@@ -8,7 +8,7 @@ from handshape_feature_extractor import HandShapeFeatureExtractor
 
 # video_path = "/Users/manasa/Documents/Visual Studio Codes/Python/SmartHomeGestureAppProjectPart2/traindata/LightOn_PRACTICE_1_Vallampalli.mp4"
 training_folder = "traindata"
-test_folder = "TestData"
+test_folder = "test"
 
 gesture_labels = {
     "Num0": 0,
