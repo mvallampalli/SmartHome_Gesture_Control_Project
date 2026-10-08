@@ -103,10 +103,18 @@ test_files = [
     filename
     for filename in os.listdir(test_folder)
     if filename.lower().endswith(".mp4")
+    and (
+        filename.startswith("T1-H-")
+        or filename.startswith("T2-H-")
+        or filename.startswith("T3-H-")
+    )
 ]
 
 test_files = sorted(test_files, key=natural_sort_key)
 print("\nProcessing test videos...")
+
+if len(test_files) != 51:
+    raise RuntimeError("Expected 51 test videos, but found " + str(len(test_files)))
 
 for filename in test_files:
     video_path = os.path.join(test_folder, filename)
