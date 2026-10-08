@@ -99,22 +99,48 @@ print("\n Total training videos processed:", len(training_features))
 
 predictions = []
 
-test_files = [
-    filename
-    for filename in os.listdir(test_folder)
-    if filename.lower().endswith(".mp4")
-    and (
-        filename.startswith("T1-H-")
-        or filename.startswith("T2-H-")
-        or filename.startswith("T3-H-")
-    )
+test_files = []
+
+test_gestures = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "DecreaseFanSpeed",
+    "FanOff",
+    "FanOn",
+    "IncreaseFanSpeed",
+    "LightOff",
+    "LightOn",
+    "SetThermo",
 ]
 
-test_files = sorted(test_files, key=natural_sort_key)
+test_files = []
+
+for test_number in ["T1", "T2", "T3"]:
+
+    for gesture in test_gestures:
+
+        if test_number == "T3" and gesture == "DecreaseFanSpeed":
+            expected_filename = "T3-H-DecereaseFanSpeed.mp4"
+        else:
+            expected_filename = test_number + "-H-" + gesture + ".mp4"
+
+        expected_path = os.path.join(test_folder, expected_filename)
+
+        if not os.path.exists(expected_path):
+            raise RuntimeError("Expected test video not found: " + expected_filename)
+
+        test_files.append(expected_filename)
+print("Number of selected test videos:", len(test_files))
 print("\nProcessing test videos...")
 
-if len(test_files) != 51:
-    raise RuntimeError("Expected 51 test videos, but found " + str(len(test_files)))
 
 for filename in test_files:
     video_path = os.path.join(test_folder, filename)
